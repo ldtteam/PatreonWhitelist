@@ -22,9 +22,26 @@ public class WhitelistOverride extends UserWhiteList
     @Override
     public boolean isWhiteListed(@NotNull GameProfile profile)
     {
-        boolean isWhitelisted = super.isWhiteListed(profile);
-        Log.getLogger().log(Level.INFO, "Patreon Whitelist validating, File value: " + isWhitelisted);
-        return isWhitelisted || this.checkUrl("https://auth.minecolonies.com/api/minecraft/" + profile.getId().toString() + "/whitelist");
+        if (this.checkUrl("https://auth.minecolonies.com/api/minecraft/" + profile.getId().toString() + "/whitelist"))
+        {
+            PatreonWhitelist.config.updateAuthFor(profile);
+            Log.getLogger().log(Level.INFO, "Online authenticated");
+            return true;
+        }
+
+        if (super.isWhiteListed(profile))
+        {
+            Log.getLogger().log(Level.INFO, "Whitelist authenticated");
+            return true;
+        }
+
+        if (PatreonWhitelist.config.hasOfflineAuth(profile.getId()))
+        {
+            Log.getLogger().log(Level.INFO, "Offline authenticated");
+            return true;
+        }
+
+        return false;
     }
 
     private boolean checkUrl(String urlString)

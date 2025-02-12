@@ -23,7 +23,7 @@ public class Commonconfig
 
     public Commonconfig(ModConfigSpec.Builder builder)
     {
-        offlineAuthValidHours = builder.define("Amount of days authentication stays valid for after last successfull auth", 24 * 7);
+        offlineAuthValidHours = builder.define("Amount of hours authentication stays valid for after last successfull auth", 24 * 7);
         loginTimes = builder.defineList("List of player UUID to last auth time", new ArrayList<>(), () -> "", v -> true);
         builder.build();
     }

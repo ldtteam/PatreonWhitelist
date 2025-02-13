@@ -92,6 +92,7 @@ public class Commonconfig
         }
 
         loginTimes.set(stringData);
+        holder.save();
     }
 
     /**
@@ -108,7 +109,7 @@ public class Commonconfig
             return false;
         }
 
-        return Duration.between(LocalDateTime.now(), nameTime.time).abs().getSeconds() < offlineAuthValidHours.get() * 60L * 60L;
+        return Duration.between(LocalDateTime.now(), nameTime.time).getSeconds() < offlineAuthValidHours.get() * 60L * 60L;
     }
 
     private static record NameTime(

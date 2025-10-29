@@ -53,6 +53,7 @@ public class WhitelistOverride extends UserWhiteList
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setReadTimeout(5000);
+            conn.setConnectTimeout(5000);
             int statusCode = conn.getResponseCode();
             Log.getLogger().log(Level.INFO, "Patreon Whitelist validating, status code: " + statusCode);
             conn.getInputStream();
